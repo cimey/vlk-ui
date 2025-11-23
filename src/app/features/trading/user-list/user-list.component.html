@@ -1,0 +1,33 @@
+<div class="container mt-4">
+
+  <h3 class="mb-3">Clients</h3>
+
+  <div *ngIf="loading" class="alert alert-info">Loading users...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <table *ngIf="!loading && users.length" class="table table-bordered table-hover">
+    <thead class="table-light">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th style="width: 150px;">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="goToTrade(user.clientId)">
+            Trade
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !users.length" class="alert alert-warning">
+    No users found.
+  </div>
+</div>

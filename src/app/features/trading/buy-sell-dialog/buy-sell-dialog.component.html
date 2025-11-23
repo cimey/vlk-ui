@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>
+  {{data.mode | uppercase }} {{ data.stockName }}
+</h2>
+
+<div mat-dialog-content>
+
+  <div *ngIf="loading">Processing...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <p>Price: {{ data.price | number:'1.2-2' }}</p>
+  <p>Your balance: {{ data.balance | number:'1.2-2' }}</p>
+  <p *ngIf="data.stockCount > 0">You Have {{ data.stockCount }} {{ data.stockName }}</p>
+  <p *ngIf="data.stockCount ===  0">You do not have this stock!</p>
+
+  <label>Shares:</label>
+  <input type="number" [(ngModel)]="shares" class="form-control" min="1">
+  <div *ngIf="sharesError" class="text-danger mt-1">
+    {{ sharesError }}
+  </div>
+  <p class="mt-2">Total: <strong>{{ totalCost() | number:'1.2-2' }}</strong></p>
+
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancel</button>
+
+  <button *ngIf="data.mode == 'buy'" mat-raised-button color="primary" (click)="buy()"
+    [disabled]="!!sharesError || loading">
+    Buy
+  </button>
+
+  <button *ngIf="data.mode == 'sell'" mat-raised-button color="accent" (click)="sell()"
+    [disabled]="!!sharesError || loading">
+    Sell
+  </button>
+</div>
